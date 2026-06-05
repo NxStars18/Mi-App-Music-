@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mi Music App</title>
+</head>
+
+<body>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <div class="player">
+
+        <img id="portada" src="images/Reina Pepiada.jpg" alt="Portada">
+
+        <h2 id="titulo"></h2>
+        <p id="artista"></p>
+
+        <audio id="player" controls></audio>
+
+        <div class="controles">
+            <button onclick="anterior()">⏮</button>
+
+            <button id="playPauseBtn" onclick="togglePlay()">▶</button>
+
+            <button onclick="siguiente()">⏭</button>
+        </div>
+
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
