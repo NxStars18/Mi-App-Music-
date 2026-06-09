@@ -136,33 +136,29 @@ function crearPlaylist() {
 
 }
 
-function buscarCancion() {
+async function buscarCancion() {
+  const texto = document.getElementById("buscador").value;
 
-  const texto =
-    document.getElementById("buscador")
-      .value.toLowerCase();
+  if (texto.length < 3) return;
 
-  const items =
-    document.querySelectorAll("#playlist li");
+  const respuesta = await fetch(`https://corsproxy.io/?https://api.deezer.com/search?q=${encodeURIComponent(texto)}`);
+  const data = await respuesta.json();
 
-  items.forEach(item => {
+  const lista = document.getElementById("playlist");
+  lista.innerHTML = "";
 
-    if (
-      item.textContent
-        .toLowerCase()
-        .includes(texto)
-    ) {
-
-      item.style.display = "block";
-
-    } else {
-
-      item.style.display = "none";
-
-    }
-
+  data.data.forEach((cancion, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${cancion.title} - ${cancion.artist.name}`;
+    li.onclick = () => {
+      document.getElementById("titulo").textContent = cancion.title;
+      document.getElementById("artista").textContent = cancion.artist.name;
+      document.getElementById("portada").src = cancion.album.cover_medium;
+      player.src = cancion.preview;
+      player.play();
+    };
+    lista.appendChild(li);
   });
-
 }
 
 player.addEventListener(
@@ -268,6 +264,32 @@ function mostrarSoloFavoritos() {
   });
 
 }
+
+const barra = document.getElementById("barra");
+
+function formatearTiempo(segundos) {
+  const min = Math.floor(segundos / 60);
+  const sec = Math.floor(segundos % 60);
+  return `${min}:${sec < 10 ? "0" : ""}${sec}`;
+}
+
+player.addEventListener("timeupdate", () => {
+  if (player.duration) {
+    barra.value = (player.currentTime / player.duration) * 100;
+    document.getElementById("tiempoActual").textContent = formatearTiempo(player.currentTime);
+    document.getElementById("duracion").textContent = formatearTiempo(player.duration);
+  }
+});
+
+barra.addEventListener("input", () => {
+  player.currentTime = (barra.value / 100) * player.duration;
+});
+
+const volumen = document.getElementById("volumen");
+
+volumen.addEventListener("input", () => {
+  player.volume = volumen.value;
+});
 
 cargarCancion(0);
 

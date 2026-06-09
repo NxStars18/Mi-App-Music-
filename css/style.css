@@ -124,73 +124,134 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
+    height: 90px;
     background: #181818;
     border-top: 1px solid #333;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+    gap: 20px;
 }
+
+/* Izquierda */
 
 .player-info {
     display: flex;
     align-items: center;
     gap: 15px;
+    width: 250px;
+    min-width: 200px;
 }
 
 #portada {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 8px;
+}
+
+#titulo {
+    font-size: 14px;
 }
 
 #artista {
     color: #b3b3b3;
+    font-size: 13px;
+}
+
+/* Centro */
+
+.player-centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 600px;
 }
 
 .controles {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    gap: 12px;
+}
+
+.controles button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #03b1a3;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.controles button:hover {
+    transform: scale(1.1);
 }
 
 .shuffle-btn {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border: none;
     border-radius: 50%;
     background: #1DB954;
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .shuffle-btn img {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
 }
 
 .shuffle-btn:hover {
     transform: scale(1.1);
 }
 
-.controles button {
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 50%;
-    background: #03b1a3;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
-.controles button:hover {
-    transform: scale(1.1);
+#barra {
+    flex: 1;
+    height: 4px;
+    accent-color: #1DB954;
+    cursor: pointer;
 }
+
+#tiempoActual,
+#duracion {
+    font-size: 12px;
+    color: #b3b3b3;
+    min-width: 35px;
+}
+
+/* Derecha - Volumen */
+
+.volumen-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 150px;
+    justify-content: flex-end;
+}
+
+#volumen {
+    width: 100px;
+    height: 4px;
+    accent-color: #1DB954;
+    cursor: pointer;
+}
+
+/* FAVORITOS */
 
 #favoritos {
     list-style: none;
@@ -209,3 +270,4 @@ body {
 #favoritos li:hover {
     background: #282828;
 }
+
