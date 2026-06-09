@@ -1,32 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Mi Music App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Music</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Sidebar -->
 
-    <div class="player">
+    <aside class="sidebar">
 
-        <img id="portada" src="images/Reina Pepiada.jpg" alt="Portada">
+        <h1>🎵 App Music</h1>
 
-        <h2 id="titulo"></h2>
-        <p id="artista"></p>
+        <button onclick="crearPlaylist()">
+            🏠 Inicio
+        </button>
+        <button onclick="mostrarSoloFavoritos()">
+            ❤️ Favoritos
+        </button>
 
-        <audio id="player" controls></audio>
+        <button onclick="mostrarBiblioteca()">
+            📂 Biblioteca
+        </button>
+
+    </aside>
+
+    <!-- Contenido -->
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <input type="text" id="buscador" placeholder="¿Qué quieres reproducir?" onkeyup="buscarCancion()">
+        </div>
+
+        <h2>Álbumes</h2>
+
+        <div class="albums">
+
+            <div class="album" onclick="seleccionarCancion(0)">
+                <img src="images/Reina Pepiada.jpg">
+                <h3>Reina Pepiada</h3>
+                <p>Álvaro Díaz</p>
+            </div>
+
+            <div class="album" onclick="seleccionarCancion(1)">
+                <img src="images/Desconectado.jpg">
+                <h3>Desconectado</h3>
+                <p>Jaze</p>
+            </div>
+
+            <div class="album" onclick="seleccionarCancion(2)">
+                <img src="images/Otro Atardecer.jpg">
+                <h3>Otro Atardecer</h3>
+                <p>Bad Bunny</p>
+            </div>
+
+        </div>
+
+        <h2 class="playlist-title">Playlist</h2>
+
+        <ul id="playlist"></ul>
+
+    </main>
+
+    <!-- Reproductor -->
+
+    <footer class="bottom-player">
+
+        <div class="player-info">
+
+            <img id="portada" src="">
+
+            <div>
+                <h3 id="titulo"></h3>
+                <p id="artista"></p>
+            </div>
+
+        </div>
 
         <div class="controles">
+
+            <button class="shuffle-btn" onclick="aleatorio()">
+                <img src="images/Mezcla Aleatoria.png" alt="Aleatorio">
+            </button>
+
             <button onclick="anterior()">⏮</button>
 
             <button id="playPauseBtn" onclick="togglePlay()">▶</button>
 
             <button onclick="siguiente()">⏭</button>
+
+            <button id="favoritoBtn" onclick="toggleFavorito()">
+                🤍
+            </button>
+
         </div>
 
-    </div>
+        <audio id="player"></audio>
+
+    </footer>
 
     <script src="js/script.js"></script>
 
