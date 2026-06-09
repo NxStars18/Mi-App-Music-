@@ -27,113 +27,62 @@ const canciones = [
 const player = document.getElementById("player");
 
 function cargarCancion(index) {
-
   indiceActual = index;
-
-  document.getElementById("titulo").textContent =
-    canciones[index].nombre;
-
-  document.getElementById("artista").textContent =
-    canciones[index].artista;
-
-  document.getElementById("portada").src =
-    canciones[index].portada;
-
-  player.src =
-    canciones[index].archivo;
+  document.getElementById("titulo").textContent = canciones[index].nombre;
+  document.getElementById("artista").textContent = canciones[index].artista;
+  document.getElementById("portada").src = canciones[index].portada;
+  player.src = canciones[index].archivo;
 }
 
 function seleccionarCancion(index) {
-
   cargarCancion(index);
-
   player.play();
 }
 
 function togglePlay() {
-
-  const btn =
-    document.getElementById("playPauseBtn");
-
+  const btn = document.getElementById("playPauseBtn");
   if (player.paused) {
-
     player.play();
     btn.textContent = "⏸";
-
   } else {
-
     player.pause();
     btn.textContent = "▶";
-
   }
 }
 
 function siguiente() {
-
   indiceActual++;
-
   if (indiceActual >= canciones.length) {
-
     indiceActual = 0;
   }
-
   cargarCancion(indiceActual);
-
   player.play();
 }
 
 function anterior() {
-
   indiceActual--;
-
   if (indiceActual < 0) {
-
-    indiceActual =
-      canciones.length - 1;
+    indiceActual = canciones.length - 1;
   }
-
   cargarCancion(indiceActual);
-
   player.play();
 }
 
 function aleatorio() {
-
-  indiceActual =
-    Math.floor(
-      Math.random() * canciones.length
-    );
-
+  indiceActual = Math.floor(Math.random() * canciones.length);
   cargarCancion(indiceActual);
-
   player.play();
 }
 
 function crearPlaylist() {
-
-  const lista =
-    document.getElementById("playlist");
-
+  const lista = document.getElementById("playlist");
   lista.innerHTML = "";
-
   canciones.forEach((cancion, index) => {
-
-    const li =
-      document.createElement("li");
-
-    li.textContent =
-      `${cancion.nombre} - ${cancion.artista}`;
-
-    li.onclick = () => {
-
-      seleccionarCancion(index);
-
-    };
-
+    const li = document.createElement("li");
+    li.textContent = `${cancion.nombre} - ${cancion.artista}`;
+    li.onclick = () => seleccionarCancion(index);
     lista.appendChild(li);
-
   });
-
 }
 
 async function buscarCancion() {
@@ -161,108 +110,73 @@ async function buscarCancion() {
   });
 }
 
-player.addEventListener(
-  "ended",
-  siguiente
-);
+player.addEventListener("ended", siguiente);
 
-player.addEventListener(
-  "play",
-  () => {
-    document.getElementById(
-      "playPauseBtn"
-    ).textContent = "⏸";
-  }
-);
+player.addEventListener("play", () => {
+  document.getElementById("playPauseBtn").textContent = "⏸";
+});
 
-player.addEventListener(
-  "pause",
-  () => {
-    document.getElementById(
-      "playPauseBtn"
-    ).textContent = "▶";
-  }
-);
+player.addEventListener("pause", () => {
+  document.getElementById("playPauseBtn").textContent = "▶";
+});
 
 function toggleFavorito() {
-
-  canciones[indiceActual].favorito =
-    !canciones[indiceActual].favorito;
-
+  canciones[indiceActual].favorito = !canciones[indiceActual].favorito;
   actualizarFavorito();
-
   mostrarFavoritos();
 }
 
 function actualizarFavorito() {
-
-  const btn =
-    document.getElementById("favoritoBtn");
-
-  if (canciones[indiceActual].favorito) {
-
-    btn.textContent = "❤️";
-
-  } else {
-
-    btn.textContent = "🤍";
-
-  }
+  const btn = document.getElementById("favoritoBtn");
+  btn.textContent = canciones[indiceActual].favorito ? "❤️" : "🤍";
 }
+
 function mostrarFavoritos() {
-
-  const listaFavoritos =
-    document.getElementById("favoritos");
-
+  const listaFavoritos = document.getElementById("favoritos");
   listaFavoritos.innerHTML = "";
-
   canciones.forEach((cancion, index) => {
-
     if (cancion.favorito) {
-
       const li = document.createElement("li");
-
-      li.textContent =
-        `${cancion.nombre} - ${cancion.artista}`;
-
-      li.onclick = () => {
-        seleccionarCancion(index);
-      };
-
+      li.textContent = `${cancion.nombre} - ${cancion.artista}`;
+      li.onclick = () => seleccionarCancion(index);
       listaFavoritos.appendChild(li);
     }
-
   });
-
 }
 
 function mostrarSoloFavoritos() {
-
-  const lista =
-    document.getElementById("playlist");
-
+  const lista = document.getElementById("playlist");
   lista.innerHTML = "";
 
   canciones.forEach((cancion, index) => {
-
     if (cancion.favorito) {
+      const li = document.createElement("li");
+      li.style.display = "flex";
+      li.style.justifyContent = "space-between";
+      li.style.alignItems = "center";
 
-      const li =
-        document.createElement("li");
+      const nombre = document.createElement("span");
+      nombre.textContent = `${cancion.nombre} - ${cancion.artista}`;
+      nombre.onclick = () => seleccionarCancion(index);
+      nombre.style.cursor = "pointer";
 
-      li.textContent =
-        `${cancion.nombre} - ${cancion.artista}`;
-
-      li.onclick = () => {
-        seleccionarCancion(index);
+      const btnEliminar = document.createElement("button");
+      btnEliminar.textContent = "❌";
+      btnEliminar.style.background = "none";
+      btnEliminar.style.border = "none";
+      btnEliminar.style.cursor = "pointer";
+      btnEliminar.style.fontSize = "16px";
+      btnEliminar.onclick = () => {
+        cancion.favorito = false;
+        mostrarSoloFavoritos();
+        actualizarFavorito();
       };
 
+      li.appendChild(nombre);
+      li.appendChild(btnEliminar);
       lista.appendChild(li);
-
     }
-
   });
-
 }
 
 const barra = document.getElementById("barra");
@@ -292,7 +206,5 @@ volumen.addEventListener("input", () => {
 });
 
 cargarCancion(0);
-
 crearPlaylist();
-
 mostrarFavoritos();
