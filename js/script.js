@@ -147,7 +147,7 @@ async function buscarCancion() {
   const lista = document.getElementById("playlist");
   lista.innerHTML = "";
 
-  data.data.forEach((cancion, index) => {
+  data.data.forEach((cancion) => {
     const li = document.createElement("li");
     li.textContent = `${cancion.title} - ${cancion.artist.name}`;
     li.onclick = () => {
